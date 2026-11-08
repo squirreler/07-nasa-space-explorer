@@ -1,4 +1,3 @@
-// Keep all custom app behavior here; dateRange.js is unchanged.
 const startInput = document.getElementById('startDate');
 const endInput = document.getElementById('endDate');
 const form = document.getElementById('dateForm');
@@ -6,11 +5,10 @@ const gallery = document.getElementById('gallery');
 const statusMessage = document.getElementById('status');
 const modal = document.getElementById('imageModal');
 const modalMedia = document.getElementById('modalMedia');
-const API_KEY = 'DEMO_KEY'; // Valid public key for NASA's legacy endpoint.
+const API_KEY = 'DEMO_KEY';
 
 setupDateInputs(startInput, endInput);
 
-// APOD publishes on Eastern time; UTC may already be the following day.
 const latestDate = new Intl.DateTimeFormat('en-CA', {
   timeZone: 'America/New_York', year: 'numeric', month: '2-digit', day: '2-digit'
 }).format(new Date());
@@ -23,7 +21,6 @@ startInput.max = endInput.max = latestDate;
 endInput.value = latestDate;
 startInput.value = addDays(latestDate, -8);
 
-// Always select nine days, even at the beginning or end of the archive.
 function syncDates(input) {
   if (!input.value || !input.validity.valid) return;
   if (input === startInput) {
@@ -35,7 +32,6 @@ function syncDates(input) {
   }
 }
 
-// Prevent the starter's date arithmetic from running on a cleared input.
 startInput.addEventListener('change', event => {
   if (!startInput.value || !startInput.validity.valid) event.stopImmediatePropagation();
 }, true);
@@ -48,7 +44,6 @@ function formatDate(date) {
   }).format(new Date(date + 'T00:00:00Z'));
 }
 
-// The new API returns HTML in some fields. Display text without executing HTML.
 function plainText(value) {
   const parsed = new DOMParser().parseFromString(String(value || ''), 'text/html');
   parsed.querySelectorAll('br').forEach(element => element.replaceWith('\n'));
@@ -69,7 +64,6 @@ function imageURL(value, preview = false) {
   if (!safe) return '';
   const url = new URL(safe);
   if (url.hostname === 'assets.science.nasa.gov') {
-    // Repair invalid size hints in some migrated images.
     for (const size of ['w', 'h']) {
       if (url.searchParams.get(size) === '0') url.searchParams.delete(size);
     }
@@ -92,7 +86,6 @@ async function requestEntries(url, start, end) {
 }
 
 async function fetchEntries(start, end) {
-  // NASA's current, key-free APOD feed uses YYMMDD date filters.
   const params = new URLSearchParams({
     date_from: start.slice(2).replaceAll('-', ''),
     date_to: end.slice(2).replaceAll('-', ''),
@@ -101,7 +94,6 @@ async function fetchEntries(start, end) {
   try {
     return await requestEntries('https://science.nasa.gov/wp-json/wp/v2/apod-basic?' + params, start, end);
   } catch (error) {
-    // Retain the original assignment endpoint with a valid public API key.
     const legacy = new URLSearchParams({ api_key: API_KEY, start_date: start, end_date: end, thumbs: 'true' });
     try {
       return await requestEntries('https://api.nasa.gov/planetary/apod?' + legacy, start, end);
@@ -205,7 +197,6 @@ form.addEventListener('submit', async event => {
   }
 });
 
-// Native dialog supplies Escape closing, focus trapping, and focus restoration.
 document.getElementById('closeModal').addEventListener('click', () => modal.close());
 modal.addEventListener('click', event => {
   const bounds = modal.getBoundingClientRect();

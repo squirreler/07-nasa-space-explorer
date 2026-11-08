@@ -1,30 +1,28 @@
 # Project reflections
 
-These responses describe this AI-assisted implementation. The LinkedIn text is a draft.
-
 ## Working with APIs
 
-The app sends the selected dates to NASA, reads the JSON response, and turns each entry into a gallery item. A nine-day range ends eight days after its starting date because both dates are included. The response is checked for all nine consecutive dates before updating the gallery.
+This project uses `fetch()` to send the selected dates to NASA and read the JSON response. Each object becomes a gallery item with an image, title, and date. Clicking an item shows its explanation in a modal. A nine-day range ends eight days after the starting date because both dates count.
 
-NASA’s APOD API recently changed. Its current endpoint needs no key and uses different date parameters. It also returns HTML in some fields, so the app converts that content to readable text and uses `hdurl` for images. The original endpoint remains a fallback with NASA’s public `DEMO_KEY`. This illustrates why reading documentation and examining the actual response are necessary parts of working with APIs.
+NASA’s API has changed, so checking the documentation was important. The current endpoint does not need a key, and some fields contain HTML that needs to be converted to text. The images come from `hdurl`. I used AI to help with the API connection and debugging.
 
-Loading and error messages also matter. Visitors should know when a request is running and what to do when it fails. The app restores its controls after either success or failure so they can try again.
+The loading message lets the user know the request is running. If it fails, an error message appears and the button becomes available again so the user can retry.
 
 ## Debugging
 
-The older endpoint returned HTTP 200 but used “NASA Science” as every title. Inspecting the returned objects revealed that the request had succeeded without providing useful gallery data. Comparing the response with NASA’s updated documentation led to using the current feed and validating its dates and titles.
+One problem was that the older endpoint returned a successful response but used “NASA Science” as every title. Looking at the actual response showed that the data was wrong even though the request had worked. Using the current endpoint fixed this. The app also checks that the response includes all nine selected dates.
 
-Date handling needed attention too. UTC can already be tomorrow while NASA is still publishing for today in the United States. The app uses Eastern time for the latest APOD date and UTC midnight for date arithmetic. Changing either date preserves nine days, including around leap days and the archive’s beginning. The provided date-range file remains unchanged.
+Dates were another issue. UTC can already be tomorrow before NASA posts the next picture, so the latest date uses Eastern time. Changing either input keeps the range at nine days. Some image URLs also had zero-width or zero-height parameters that needed to be removed.
 
-Some migrated image URLs contained invalid zero-width or zero-height parameters. Removing those parameters repaired the affected images. Browser checks covered real NASA responses, gallery updates, modal content and closing, video links, loading, failed requests, and mobile layout. The key takeaway is to verify the actual data and user interaction instead of treating a successful network status as proof that everything works.
+The gallery, modal, loading message, error handling, and mobile layout were checked in a browser. The main takeaway is to inspect the data and test what the user actually sees instead of only checking for an error in the console.
 
 ## LinkedIn post draft
 
-Built an AI-assisted NASA Space Explorer with HTML, CSS, and JavaScript. 🚀
+Finished my NASA Space Explorer class project using HTML, CSS, and JavaScript!
 
-Choose nine consecutive days from NASA’s Astronomy Picture of the Day archive, browse the gallery, and open any entry to see a larger image and read its explanation. The app includes NASA-inspired styling, loading feedback, error handling, and links for video entries.
+It lets you choose nine days from NASA’s Astronomy Picture of the Day archive and open each picture to read more about it. It also handles loading, errors, and video entries.
 
-An interesting challenge was adapting to NASA’s updated APOD API. Checking the response format and validating the dates mattered just as much as making the request.
+The biggest challenge was working with NASA’s updated API and making sure the selected dates returned the right data. I used AI for help with the API connection and debugging.
 
 Live app: https://squirreler.github.io/07-nasa-space-explorer/
 
