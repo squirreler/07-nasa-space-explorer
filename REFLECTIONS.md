@@ -1,35 +1,33 @@
 # Project reflections
 
-These responses describe the work completed in this AI-assisted project. The LinkedIn text is a draft, not a published post.
+These responses describe this AI-assisted implementation. The LinkedIn text is a draft.
 
 ## Working with APIs
 
-Connecting this app to APOD involved more than putting a URL into `fetch()`. The selected dates must be formatted for the endpoint, the response must be checked, and each entry must be mapped to the gallery. Because both endpoints include the start and end dates, a nine-day window ends eight days after it starts. The app verifies all nine distinct dates before replacing the gallery, rather than assuming that a successful HTTP response contains the expected data.
+The app sends the selected dates to NASA, reads the JSON response, and turns each entry into a gallery item. A nine-day range ends eight days after its starting date because both dates are included. The response is checked for all nine consecutive dates before updating the gallery.
 
-The API documentation was especially important because NASA changed its APOD service in September 2026. The current feed uses `date_from` and `date_to` in `YYMMDD` format and does not require an API key. It also returns HTML in some text fields and uses `url` for the article rather than the image. The implementation uses `hdurl` for images, extracts readable text safely, and retains the original endpoint with the public `DEMO_KEY` as a fallback. This project demonstrates why understanding the response structure matters as much as making the request.
+NASA’s APOD API recently changed. Its current endpoint needs no key and uses different date parameters. It also returns HTML in some fields, so the app converts that content to readable text and uses `hdurl` for images. The original endpoint remains a fallback with NASA’s public `DEMO_KEY`. This illustrates why reading documentation and examining the actual response are necessary parts of working with APIs.
 
-Real APIs also need a useful loading state and a recovery path. While a request runs, the app displays a loading message and disables duplicate requests. If the connection fails, the request times out, or an entry is missing, it explains the problem and offers a retry. A previously loaded collection remains available. These details turn a basic API exercise into an app someone can actually use.
+Loading and error messages also matter. Visitors should know when a request is running and what to do when it fails. The app restores its controls after either success or failure so they can try again.
 
 ## Debugging
 
-One significant issue was that the older APOD endpoint returned a successful response with nine entries, but their titles were all “NASA Science.” Checking only the HTTP status or array length would have missed the problem. Comparing the actual JSON with NASA’s current documentation exposed the migration. The solution was to use the current official feed and validate the contents of either endpoint before rendering them.
+The older endpoint returned HTTP 200 but used “NASA Science” as every title. Inspecting the returned objects revealed that the request had succeeded without providing useful gallery data. Comparing the response with NASA’s updated documentation led to using the current feed and validating its dates and titles.
 
-Another issue involved dates. Late in the evening in the United States, UTC can already be the following day, while NASA has not published that day’s APOD. The app calculates the latest archive date using US Eastern time and keeps all date arithmetic at UTC midnight to avoid daylight-saving offsets. It also handles the beginning of the archive and leap days while preserving the nine-day requirement. The starter date-range file was left unchanged; these adjustments are in `script.js`.
+Date handling needed attention too. UTC can already be tomorrow while NASA is still publishing for today in the United States. The app uses Eastern time for the latest APOD date and UTC midnight for date arithmetic. Changing either date preserves nine days, including around leap days and the archive’s beginning. The provided date-range file remains unchanged.
 
-Live checks also revealed migrated image URLs containing `w=0&h=0`. The app removes those invalid size hints and requests smaller gallery previews while preserving full-resolution images for the modal. Automated browser tests check loading, date selection, modal content, keyboard navigation and focus restoration, video entries, retry behavior, invalid and incomplete responses, and mobile layout. Live browser checks then verify that real NASA data and media work, since controlled tests alone cannot reveal upstream data changes.
-
-The main debugging takeaway is to inspect the data and test the interaction where the problem appears. A green network status does not guarantee correct content, and a good-looking desktop page does not establish that keyboard controls or mobile layouts work.
+Some migrated image URLs contained invalid zero-width or zero-height parameters. Removing those parameters repaired the affected images. Browser checks covered real NASA responses, gallery updates, modal content and closing, video links, loading, failed requests, and mobile layout. The key takeaway is to verify the actual data and user interaction instead of treating a successful network status as proof that everything works.
 
 ## LinkedIn post draft
 
-Built an AI-assisted Space Explorer using HTML, CSS, JavaScript, and NASA’s Astronomy Picture of the Day archive. 🚀
+Built an AI-assisted NASA Space Explorer with HTML, CSS, and JavaScript. 🚀
 
-The app explores nine consecutive days of images and videos. Each discovery opens a detailed view with a larger image, its date, and NASA’s explanation. It also includes random space facts, responsive layouts, loading feedback, and keyboard-accessible controls.
+Choose nine consecutive days from NASA’s Astronomy Picture of the Day archive, browse the gallery, and open any entry to see a larger image and read its explanation. The app includes NASA-inspired styling, loading feedback, error handling, and links for video entries.
 
-The most interesting challenge was adapting to a real API change: NASA recently migrated APOD to a new endpoint. The project handles the new response format, validates the selected dates, and provides error recovery when data is unavailable. It was a practical example of why API integration includes reading documentation and checking actual responses, not just making a request.
+An interesting challenge was adapting to NASA’s updated APOD API. Checking the response format and validating the dates mattered just as much as making the request.
 
-Explore it: https://squirreler.github.io/07-nasa-space-explorer/
+Live app: https://squirreler.github.io/07-nasa-space-explorer/
 
 Source: https://github.com/squirreler/07-nasa-space-explorer
 
-#WebDevelopment #JavaScript #APIs #NASA #BuildInPublic
+#JavaScript #WebDevelopment #APIs

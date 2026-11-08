@@ -1,253 +1,46 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#090c12" />
-    <meta
-      name="description"
-      content="Nine days. Infinite wonder. Explore NASA's Astronomy Picture of the Day archive with photographs, films, and the stories behind them."
-    />
-    <title>Space Explorer — Nine days of discovery</title>
-    <link rel="icon" href="img/nasa-worm-logo.png" type="image/png" />
-    <link rel="stylesheet" href="fonts/fonts.css" />
-    <link rel="stylesheet" href="style.css" />
-    <link rel="preload" href="img/cosmic-cliffs.jpg" as="image" />
-  </head>
-  <body>
-    <a class="skip-link" href="#explore">Skip to the explorer</a>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Explore nine days of NASA Astronomy Pictures of the Day." />
+  <title>NASA Space Explorer</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <main class="container">
     <header class="site-header">
-      <div class="container header-inner">
-        <a class="brand" href="./" aria-label="Space Explorer home">
-          <img
-            src="img/nasa-worm-logo.png"
-            alt="NASA"
-            class="logo"
-            width="104"
-            height="30"
-          />
-          <span class="brand-divider" aria-hidden="true"></span
-          ><span>Space Explorer</span>
-        </a>
-        <nav aria-label="Main navigation">
-          <a class="nav-active" href="#explore">The archive</a
-          ><a
-            href="https://science.nasa.gov/"
-            target="_blank"
-            rel="noopener noreferrer"
-            >NASA Science <span aria-hidden="true">↗</span></a
-          >
-        </nav>
-      </div>
+      <img src="img/nasa-worm-logo.png" alt="NASA" class="logo" />
+      <h1>Space Explorer</h1>
     </header>
-    <main>
-      <section class="hero" aria-labelledby="hero-title">
-        <div class="container hero-inner">
-          <p class="eyebrow">
-            <span class="red-marker" aria-hidden="true"></span> Astronomy
-            Picture of the Day
-          </p>
-          <h1 id="hero-title">
-            A little closer<br />to the <span>cosmos.</span>
-          </h1>
-          <p class="hero-description">
-            A new perspective, every day. Travel through NASA’s<br
-              class="desktop-break"
-            />
-            archive and discover the universe, nine days at a time.
-          </p>
-          <a class="hero-link" href="#explore"
-            >Start exploring
-            <span class="circle-arrow" aria-hidden="true">↓</span></a
-          >
-          <div class="hero-caption">
-            <span class="caption-cross" aria-hidden="true">+</span>
-            <div>
-              <span class="eyebrow">NGC 3324 · Carina Nebula</span><br />Through
-              the eyes of the James Webb Space Telescope
-            </div>
-          </div>
-          <span class="hero-coordinate" aria-hidden="true"
-            >07h 31m 18s / −58° 14′</span
-          >
-        </div>
-      </section>
-      <section
-        class="explorer container"
-        id="explore"
-        aria-labelledby="explore-title"
-      >
-        <div class="section-heading">
-          <div>
-            <p class="eyebrow section-kicker">01 / The archive</p>
-            <h2 id="explore-title">Your window to the universe.</h2>
-          </div>
-          <p>Pick a date. See what’s out there.</p>
-        </div>
-        <form
-          id="dateForm"
-          class="filters"
-          aria-label="Choose nine days to explore"
-        >
-          <div class="date-field">
-            <label for="startDate">Start date</label
-            ><input
-              type="date"
-              id="startDate"
-              aria-describedby="rangeHelp"
-              required
-            />
-          </div>
-          <span class="date-arrow" aria-hidden="true">⟶</span>
-          <div class="date-field">
-            <label for="endDate">End date</label
-            ><input
-              type="date"
-              id="endDate"
-              aria-describedby="rangeHelp"
-              required
-            />
-          </div>
-          <div class="range-note">
-            <span class="range-number">09</span
-            ><span>consecutive days<br />of discovery</span>
-          </div>
-          <button id="fetchButton" class="primary-button" type="submit">
-            <span>Get Space Images</span><span aria-hidden="true">↗</span>
-          </button>
-        </form>
-        <div class="filter-help">
-          <p id="rangeHelp">
-            Change either date to explore a nine-day window. Archive begins June
-            16, 1995.
-          </p>
-          <button id="latestButton" class="text-button" type="button">
-            Back to latest <span aria-hidden="true">↗</span>
-          </button>
-        </div>
-        <div class="gallery-heading">
-          <h3 id="galleryTitle">The latest discoveries</h3>
-          <p id="resultCount" class="eyebrow">9 days · endless perspective</p>
-        </div>
-        <p id="status" class="status" role="status" aria-live="polite"></p>
-        <div id="errorMessage" class="error-message" role="alert" hidden>
-          <p id="errorText"></p>
-          <button id="retryButton" class="text-button" type="button">
-            Try again <span aria-hidden="true">↗</span>
-          </button>
-        </div>
-        <div
-          id="gallery"
-          class="gallery"
-          aria-labelledby="galleryTitle"
-          aria-busy="false"
-        >
-          <div class="placeholder">
-            <span class="placeholder-orbit" aria-hidden="true">◎</span>
-            <p>Your next discovery is waiting.</p>
-            <span>Select nine days to open the archive.</span>
-          </div>
-        </div>
-        <noscript
-          ><p class="error-message">
-            Enable JavaScript to load NASA’s archive and use the image explorer.
-          </p></noscript
-        >
-        <p class="gallery-footnote">
-          <span class="red-marker" aria-hidden="true"></span> Every image has a
-          story. Select a discovery to read it.
-        </p>
-      </section>
-      <aside class="fact-section" aria-labelledby="fact-title">
-        <div class="container fact-inner">
-          <div class="fact-label">
-            <span class="orbit-icon" aria-hidden="true">✳</span>
-            <h2 class="eyebrow" id="fact-title">
-              A moment of wonder<br /><span>Did you know?</span>
-            </h2>
-          </div>
-          <div class="fact-copy" aria-live="polite">
-            <p id="spaceFact">
-              Sunlight takes about eight minutes to reach Earth.
-            </p>
-            <a
-              id="factSource"
-              href="https://science.nasa.gov/sun/facts/"
-              target="_blank"
-              rel="noopener noreferrer"
-              >Explore the science <span aria-hidden="true">↗</span></a
-            >
-          </div>
-          <button
-            id="factButton"
-            class="fact-button"
-            type="button"
-            aria-label="Show another space fact"
-          >
-            ↻
-          </button>
-        </div>
-      </aside>
-    </main>
-    <footer class="site-footer">
-      <div class="container footer-inner">
-        <div>
-          <span class="footer-title">Keep looking up.</span>
-          <p>
-            An independent student project using NASA’s APOD archive.<br />Not
-            affiliated with or endorsed by NASA.
-          </p>
-        </div>
-        <div class="footer-links">
-          <a
-            href="https://science.nasa.gov/apod/"
-            target="_blank"
-            rel="noopener noreferrer"
-            >About APOD ↗</a
-          ><a
-            href="https://github.com/squirreler/07-nasa-space-explorer"
-            target="_blank"
-            rel="noopener noreferrer"
-            >View the source ↗</a
-          ><span>Hero: NASA, ESA, CSA, STScI</span>
-        </div>
-      </div>
-    </footer>
-    <dialog id="imageModal" class="image-modal" aria-labelledby="modalTitle">
-      <div class="modal-topbar">
-        <span class="eyebrow"
-          >A closer look / <span id="modalIndex"></span></span
-        ><button
-          id="closeModal"
-          class="icon-button"
-          type="button"
-          aria-label="Close image details"
-        >
-          ✕
-        </button>
-      </div>
-      <div id="modalMedia" class="modal-media"></div>
-      <div class="modal-content">
-        <p id="modalDate" class="eyebrow"></p>
-        <h2 id="modalTitle"></h2>
-        <p id="modalExplanation" class="modal-explanation"></p>
-        <p id="modalCredit" class="modal-credit"></p>
-        <a
-          id="originalLink"
-          class="original-link"
-          target="_blank"
-          rel="noopener noreferrer"
-          >Open original <span aria-hidden="true">↗</span></a
-        >
-      </div>
-      <div class="modal-navigation">
-        <button id="previousItem" class="text-button" type="button">
-          ← Previous</button
-        ><span class="eyebrow">Explore the collection</span
-        ><button id="nextItem" class="text-button" type="button">Next →</button>
-      </div>
-    </dialog>
-    <script src="js/dateRange.js"></script>
-    <script src="js/script.js"></script>
-  </body>
+
+    <form id="dateForm" class="filters">
+      <label>Start date <input type="date" id="startDate" required /></label>
+      <label>End date <input type="date" id="endDate" required /></label>
+      <button id="fetchButton" type="submit">Get Space Images</button>
+    </form>
+    <p class="hint">Choose either date to explore nine consecutive days, from June 16, 1995 to today.</p>
+    <p id="status" role="status" aria-live="polite"></p>
+
+    <section id="gallery" class="gallery" aria-label="Astronomy pictures" aria-busy="false">
+      <p class="placeholder">Select a date range and click “Get Space Images” to explore the cosmos.</p>
+    </section>
+    <noscript>Enable JavaScript to load NASA’s pictures.</noscript>
+    <footer>An educational project using NASA’s APOD archive. Not affiliated with NASA.</footer>
+  </main>
+
+  <dialog id="imageModal" aria-labelledby="modalTitle">
+    <button id="closeModal" type="button" aria-label="Close details">×</button>
+    <div id="modalMedia"></div>
+    <div class="modal-content">
+      <h2 id="modalTitle"></h2>
+      <p id="modalDate" class="date"></p>
+      <p id="modalExplanation"></p>
+      <p id="modalCredit" class="credit"></p>
+    </div>
+  </dialog>
+
+  <script src="js/dateRange.js"></script>
+  <script src="js/script.js"></script>
+</body>
 </html>
